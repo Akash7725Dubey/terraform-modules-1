@@ -2,44 +2,28 @@ variable "cluster_name" {
   description = "Name of the EKS cluster"
 }
 
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
+variable "vpc_id" {
+  description = "VPC ID for VPC endpoints"
 }
 
-variable "private_subnet_cidrs" {
-  description = "List of CIDR blocks for private subnets"
+variable "private_subnet_ids" {
+  description = "List of private subnet IDs"
 }
 
-variable "public_subnet_cidrs" {
-  description = "List of CIDR blocks for public subnets"
+variable "route_table_ids" {
+  description = "List of route table IDs"
 }
 
-variable "availability_zones" {
-  description = "List of availability zones"
+variable "node_security_group_id" {
+  description = "ID of the node security group"
 }
 
-variable "internet_gateway_cidr_block" {
-  description = "CIDR block for internet gateway route"
+variable "enable_vpc_endpoints" {
+  description = "Whether to create VPC endpoints"
 }
 
-variable "private_subnet_elb_role" {
-  description = "ELB role tag for private subnets"
-}
-
-variable "public_subnet_elb_role" {
-  description = "ELB role tag for public subnets"
-}
-
-variable "eip_domain" {
-  description = "Domain for Elastic IP allocation"
-}
-
-variable "private_subnet_elb_value" {
-  description = "Value for private subnet ELB role tag"
-}
-
-variable "public_subnet_elb_value" {
-  description = "Value for public subnet ELB role tag"
+variable "region" {
+  description = "AWS region"
 }
 
 variable "tags" {
