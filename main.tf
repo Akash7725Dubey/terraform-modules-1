@@ -25,6 +25,17 @@ module "security_groups" {
   cluster_egress_to_port    = var.cluster_egress_to_port
   nodes_ingress_from_port   = var.nodes_ingress_from_port
   nodes_ingress_to_port     = var.nodes_ingress_to_port
+  cluster_ingress_protocol  = var.cluster_ingress_protocol
+  cluster_egress_protocol   = var.cluster_egress_protocol
+  nodes_ingress_protocol    = var.nodes_ingress_protocol
+  nodes_egress_protocol     = var.nodes_egress_protocol
+  nodes_egress_from_port    = var.nodes_egress_from_port
+  nodes_egress_to_port      = var.nodes_egress_to_port
+  nodes_egress_cidr_blocks  = var.nodes_egress_cidr_blocks
+  cluster_ingress_type      = var.cluster_ingress_type
+  cluster_egress_type       = var.cluster_egress_type
+  nodes_ingress_type        = var.nodes_ingress_type
+  nodes_egress_type         = var.nodes_egress_type
   tags                      = var.tags
 }
 

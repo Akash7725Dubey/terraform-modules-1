@@ -22,38 +22,38 @@ resource "aws_security_group_rule" "cluster_ingress" {
   description              = "Allow worker nodes to communicate with the cluster API Server"
   from_port                = var.cluster_ingress_port
   to_port                  = var.cluster_ingress_port
-  protocol                 = "tcp"
+  protocol                 = var.cluster_ingress_protocol
   security_group_id        = aws_security_group.cluster.id
   source_security_group_id = aws_security_group.node.id
-  type                     = "ingress"
+  type                     = var.cluster_ingress_type
 }
 
 resource "aws_security_group_rule" "cluster_egress" {
   description              = "Allow cluster to communicate with worker nodes"
   from_port                = var.cluster_egress_from_port
   to_port                  = var.cluster_egress_to_port
-  protocol                 = "tcp"
+  protocol                 = var.cluster_egress_protocol
   security_group_id        = aws_security_group.cluster.id
   source_security_group_id = aws_security_group.node.id
-  type                     = "egress"
+  type                     = var.cluster_egress_type
 }
 
 resource "aws_security_group_rule" "nodes_ingress" {
   description              = "Allow nodes to communicate with each other"
   from_port                = var.nodes_ingress_from_port
   to_port                  = var.nodes_ingress_to_port
-  protocol                 = "-1"
+  protocol                 = var.nodes_ingress_protocol
   security_group_id        = aws_security_group.node.id
   source_security_group_id = aws_security_group.node.id
-  type                     = "ingress"
+  type                     = var.nodes_ingress_type
 }
 
 resource "aws_security_group_rule" "nodes_egress" {
   description       = "Allow all outbound traffic from nodes"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = var.nodes_egress_from_port
+  to_port           = var.nodes_egress_to_port
+  protocol          = var.nodes_egress_protocol
+  cidr_blocks       = var.nodes_egress_cidr_blocks
   security_group_id = aws_security_group.node.id
-  type              = "egress"
+  type              = var.nodes_egress_type
 }
