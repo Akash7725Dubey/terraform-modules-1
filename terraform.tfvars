@@ -26,6 +26,44 @@ cluster_egress_to_port = 65535
 nodes_ingress_from_port = 0
 nodes_ingress_to_port = 65535
 
+cluster_ingress_protocol = "tcp"
+cluster_egress_protocol = "tcp"
+nodes_ingress_protocol = "-1"
+nodes_egress_protocol = "-1"
+nodes_egress_from_port = 0
+nodes_egress_to_port = 0
+nodes_egress_cidr_blocks = ["0.0.0.0/0"]
+cluster_ingress_type = "ingress"
+cluster_egress_type = "egress"
+nodes_ingress_type = "ingress"
+nodes_egress_type = "egress"
+
+cluster_policy_arns = [
+  "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+  "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+]
+
+node_policy_arns = [
+  "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+  "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+  "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+]
+
+create_bastion = true
+bastion_ami_id = "ami-0c02fb55956c7d316"
+bastion_instance_type = "t3.micro"
+bastion_ssh_port = 22
+bastion_ssh_protocol = "tcp"
+bastion_allowed_ssh_cidr_blocks = ["0.0.0.0/0"]
+bastion_create_key_pair = true
+bastion_root_volume_size = 8
+bastion_root_volume_type = "gp2"
+bastion_encrypt_volumes = true
+bastion_allocate_eip = true
+bastion_eip_domain = "vpc"
+bastion_egress_protocol = "-1"
+bastion_egress_cidr_blocks = ["0.0.0.0/0"]
+
 aws_region = "us-east-1"
 
 tags = {

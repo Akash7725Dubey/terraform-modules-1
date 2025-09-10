@@ -42,8 +42,10 @@ module "security_groups" {
 module "iam" {
   source = "./modules/iam"
 
-  cluster_name = var.cluster_name
-  tags         = var.tags
+  cluster_name       = var.cluster_name
+  cluster_policy_arns = var.cluster_policy_arns
+  node_policy_arns   = var.node_policy_arns
+  tags               = var.tags
 }
 
 module "vpc_endpoints" {
@@ -57,6 +59,34 @@ module "vpc_endpoints" {
   enable_vpc_endpoints   = var.enable_vpc_endpoints
   region                 = var.aws_region
   tags                   = var.tags
+}
+
+module "bastion" {
+  count = var.create_bastion ? 1 : 0
+
+  source = "./modules/bastion"
+
+  cluster_name             = var.cluster_name
+  vpc_id                   = module.vpc.vpc_id
+  public_subnet_ids        = module.vpc.public_subnet_ids
+  ami_id                   = var.bastion_ami_id
+  instance_type            = var.bastion_instance_type
+  ssh_port                 = var.bastion_ssh_port
+  ssh_protocol             = var.bastion_ssh_protocol
+  allowed_ssh_cidr_blocks  = var.bastion_allowed_ssh_cidr_blocks
+  create_key_pair          = var.bastion_create_key_pair
+  public_key               = var.bastion_public_key
+  existing_key_name        = var.bastion_existing_key_name
+  root_volume_size         = var.bastion_root_volume_size
+  root_volume_type         = var.bastion_root_volume_type
+  encrypt_volumes          = var.bastion_encrypt_volumes
+  allocate_eip             = var.bastion_allocate_eip
+  eip_domain               = var.bastion_eip_domain
+  egress_protocol          = var.bastion_egress_protocol
+  egress_cidr_blocks       = var.bastion_egress_cidr_blocks
+  tags                     = var.tags
+
+  depends_on = [module.vpc]
 }
 
 module "eks" {
@@ -75,5 +105,5 @@ module "eks" {
   cloudwatch_log_retention   = var.cloudwatch_log_retention
   tags                       = var.tags
 
-  depends_on = [module.vpc, module.iam, module.security_groups, module.vpc_endpoints]
+  depends_on = [module.vpc, module.iam, module.security_groups, module.vpc_endpoints, module.bastion]
 }

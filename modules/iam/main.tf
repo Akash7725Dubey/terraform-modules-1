@@ -15,13 +15,9 @@ resource "aws_iam_role" "cluster" {
   tags = var.tags
 }
 
-resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
-}
-
-resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSServicePolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+resource "aws_iam_role_policy_attachment" "cluster" {
+  count      = length(var.cluster_policy_arns)
+  policy_arn = var.cluster_policy_arns[count.index]
   role       = aws_iam_role.cluster.name
 }
 
@@ -42,17 +38,8 @@ resource "aws_iam_role" "node" {
   tags = var.tags
 }
 
-resource "aws_iam_role_policy_attachment" "node_AmazonEKSWorkerNodePolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.node.name
-}
-
-resource "aws_iam_role_policy_attachment" "node_AmazonEKS_CNI_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.node.name
-}
-
-resource "aws_iam_role_policy_attachment" "node_AmazonEC2ContainerRegistryReadOnly" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+resource "aws_iam_role_policy_attachment" "node" {
+  count      = length(var.node_policy_arns)
+  policy_arn = var.node_policy_arns[count.index]
   role       = aws_iam_role.node.name
 }

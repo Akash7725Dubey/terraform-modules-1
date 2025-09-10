@@ -8,9 +8,6 @@ output "vpc_endpoint_ids" {
     aws_vpc_endpoint.sts[*].id,
     aws_vpc_endpoint.cloudwatch[*].id,
     aws_vpc_endpoint.elasticloadbalancing[*].id,
-    aws_vpc_endpoint.autoscaling[*].id,
-    aws_vpc_endpoint.ec2messages[*].id,
-    aws_vpc_endpoint.ssm[*].id,
-    aws_vpc_endpoint.ssmmessages[*].id
+    aws_vpc_endpoint.autoscaling[*].id
   )
 }
